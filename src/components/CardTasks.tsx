@@ -7,8 +7,9 @@ interface CardTasksProps {
   data: Task;
   handleTask: (id: number) => void;
   delet: (id: number) => void;
+  editTask: (task: Task) => void;
 }
-const CardTasks: React.FC<CardTasksProps> = ({ data, handleTask, delet }) => {
+const CardTasks: React.FC<CardTasksProps> = ({ data, handleTask, delet ,editTask}) => {
   return (
     <div className="task-contenair">
       
@@ -32,6 +33,7 @@ const CardTasks: React.FC<CardTasksProps> = ({ data, handleTask, delet }) => {
             width: "30px",
             borderRadius: "5px",
           }}
+          onClick={() => editTask(data)}
         >
           <i className="fas fa-edit edit-icon"></i>
         </button>

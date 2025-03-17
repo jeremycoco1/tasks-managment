@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import "./App.css";
 import Board from "./components/Board";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 interface Board {
   id: number;
@@ -15,21 +17,24 @@ interface Task {
   completed: boolean;
 }
 function App() {
-  const [boards, setBoards] = useState<Board[]>([
-    {
-      id: 1,
-      title: "TO DO",
-    },
-    {
-      id: 2,
-      title: "IN PROGRESS",
-    },
-    {
-      id: 3,
-      title: "DONE",
-    },
-  ]);
+  const [boards, setBoards] = useState<Board[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [isInputVisible, setIsInputVisible] = useState(false);
+  const [boardTitle, setBoardTitle] = useState("");
+
+  const addBoard = () => {
+    if (boardTitle.trim() !== "") {
+      setBoards((prev) => {
+        const lastId = prev.length > 0 ? prev[prev.length - 1].id : 0;
+        return [...prev, { id: lastId + 1, title: boardTitle }];
+      });
+    }
+    setBoardTitle(""); // Réinitialise l'input
+    setIsInputVisible(false); // Cache l'input
+  };
+  const deletBoard = (boardId: number) => {
+    setBoards((prev) => prev.filter((board) => board.id !== boardId));
+  };
 
   const moveTask = (taskId: number, direction: "left" | "right") => {
     setTasks((prevTasks) =>
@@ -48,6 +53,21 @@ function App() {
   return (
     <>
       <h1>MY TASKS</h1>
+      {isInputVisible ? (
+        <input
+          type="text"
+          value={boardTitle}
+          onChange={(e) => setBoardTitle(e.target.value)}
+          onBlur={addBoard} // Cache et ajoute le board quand on clique ailleurs
+          onKeyDown={(e) => e.key === "Enter" && addBoard()} // Ajoute aussi avec "Enter"
+          autoFocus
+          placeholder="Nom du Board"
+        />
+      ) : (
+        <button className="addB" onClick={() => setIsInputVisible(true)}>
+          <FontAwesomeIcon icon={faPlus} />
+        </button>
+      )}
       <div className="container">
         {boards.map((board) => (
           <Board
@@ -55,6 +75,7 @@ function App() {
             title={board.title}
             idBoard={board.id}
             tasks={tasks.filter((task) => task.boardId === board.id) as Task[]} // 💡 Ajout de `as Task[]`
+            deletB ={deletBoard}
             moveTask={moveTask}
             setTasks={setTasks}
           />
