@@ -1,0 +1,59 @@
+.task-contenair {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: #a1887fbf;
+    border: none;
+}
+
+.title {
+    font-weight: bolder;
+    text-align: center;
+}
+
+.content {
+    font-weight: 400;
+    padding-left: 10px;
+}
+
+.task {
+    display: flex;
+    cursor: pointer;
+    flex-direction: row;
+    width: 85%;
+
+    padding: 10px;
+    border: none;
+    background-color: #e8f0f4;
+    opacity: 0.9;
+    text-align: left;
+    justify-content: space-between;
+}
+
+.wrapp-content {
+    width: 85%;
+    white-space: normal;
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-del {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 15%;
+    align-items: center;
+}
+
+button {
+    font-size: 20px;
+}
+
+.edit-icon {
+    color: #696969bf
+}
